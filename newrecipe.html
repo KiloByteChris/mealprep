@@ -1,0 +1,62 @@
+<! DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	
+	<meta charset="utf=8">
+	<title>New Recipe</title>
+	
+</head>
+<body>
+
+	<?php
+		require "mysqli_connect.inc.php";
+	?>
+
+	<form id="newRecipeForm" action="" method="">
+		<fieldset>
+		<legend>New Recipe</legend>
+			<label for="recipeTitle">Title</label>
+			<br>
+			<input type="text" name="recipeTitle" maxlength="50"/>
+			<br>
+			<label for="recipeDescription">Description</label>
+			<br>
+			<textarea name="recipeDescription" rows="5" columns="8">Describe the recipe</textarea>
+			<br>
+			<label for="recipeDirections">Directions</label>
+			<br>
+			<textarea name="recipeDirections" rows="5" columns="8">Recipe directions</textarea>
+			<br>
+			<label for="recipeMeal">Meal Catagory</label>
+			<br>
+			<select>
+				<option></option>
+				<option value="breakfast">Breakfast</option>
+				<option value="lunch">Lunch</option>
+				<option value="dinner">Dinner</option>
+			</select>
+		</fieldset>
+		
+		<fieldset>
+		<legend>Ingredients</legend>
+			<label for="ingName">Ingredient Name</label>
+			<input type="text" name="ingName" maxlength="50"/>
+			<label for="ingAmount">Ingredient Amount</label>
+			<input type="text" name="ingAmount" maxlength="10"/>
+			<label for="unitSelect">Unit of measurment</label>
+			<select>
+				<option value="cups">cups</option>
+				<option value="tbls">tablespoons</option>
+				<option value="tps">teaspoons</option>
+			
+			</select>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Tags</legend>
+			<textarea name="tags" rows="5" columns="10">Enter tags</textarea>
+		</fieldset>
+	</form>
+</body>
+</html>
