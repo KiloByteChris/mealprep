@@ -37,20 +37,7 @@
 		
 		<fieldset>
 		<legend>Ingredients</legend>
-			
-				<label for="ingName" id="ingNumber">1</label>
-				<div id="ingDiv">
-				<input type="text" name="ingName" maxlength="50"/>
-				<label for="ingAmount">Ingredient Amount</label>
-				<input type="text" name="ingAmount" maxlength="10"/>
-				<label for="ingUnit">Unit of measurment</label>
-				<select name="ingUnit">
-					<option value="cups">cups</option>
-					<option value="tbls">tablespoons</option>
-					<option value="tps">teaspoons</option>
-				
-				</select>
-				<br>
+			<div id="ingDiv">
 			</div>
 			<button type="button" id="moreButton">+</button>
 		</fieldset>
@@ -62,21 +49,39 @@
 		</fieldset>
 		<input type="submit" name="submit" value="submit" />
 	</form>
+	<a href="browse_recipes.php">View Recipes</a>
 	
 	<script>
 	
-		var $ingBlock = $("#ingDiv").html();
-		$i = 1;
+		/*var $ingBlock = $("#ingDiv").html();*/
+		
+				
+		$i = 0;
 		$("#moreButton").click(function() {
 			$i++;
-			var $number = "<p>$i</p>";
-			var $str = $("#ingNumber").text();
-			console.log($str);
-			$("#ingNumber").innerHTML = $i;
-			$("#ingDiv").append($i);
+			
+			
+			var $ingBlock = "<div id=" + "ingDiv" + $i +" class=" + " inDiv" +">";
+			$ingBlock += "<label for=" + "ingName" +$i+ " id="+"ingNumber" + $i + ">" +$i+"</label>";
+				$ingBlock += "<input type="+"text"+" name="+"ingName"+$i+" maxlength="+"50"+"/>";
+				
+				$ingBlock += "<label for="+"ingAmount"+$i+">Ingredient Amount</label>";
+				$ingBlock += "<input type="+"text"+" name="+"ingAmount"+$i+" maxlength="+"10"+"/>";
+				
+				$ingBlock += "<label for="+"ingUnit"+$i+">Unit of measurment</label>";
+				$ingBlock += "<select name="+"ingUnit"+$i+">";
+					$ingBlock += "<option value="+"cups"+">cups</option>";
+					$ingBlock += "<option value="+"tbls"+">tablespoons</option>";
+					$ingBlock += "<option value="+"tps"+">teaspoons</option>";
+				
+				$ingBlock += "</select>";
+				$ingBlock += "<br>";
+				
+			$ingBlock += "</div>";
+			
 			$("#ingDiv").append($ingBlock);
 			
-			
+			$("#ingNumber")
 		});
 		
 		
