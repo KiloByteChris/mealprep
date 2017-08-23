@@ -5,15 +5,12 @@
 	
 	<meta charset="utf=8">
 	<title>New Recipe</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	
 </head>
 <body>
 
-	<?php
-		require "mysqli_connect.inc.php";
-	?>
-
-	<form id="newRecipeForm" action="" method="">
+	<form id="newRecipeForm" action="php/new_recipe_form_process.php" method="post">
 		<fieldset>
 		<legend>New Recipe</legend>
 			<label for="recipeTitle">Title</label>
@@ -28,9 +25,9 @@
 			<br>
 			<textarea name="recipeDirections" rows="5" columns="8">Recipe directions</textarea>
 			<br>
-			<label for="recipeMeal">Meal Catagory</label>
+			<label for="recipeCategory">Meal Category</label>
 			<br>
-			<select>
+			<select name="recipeCategory">
 				<option></option>
 				<option value="breakfast">Breakfast</option>
 				<option value="lunch">Lunch</option>
@@ -40,23 +37,49 @@
 		
 		<fieldset>
 		<legend>Ingredients</legend>
-			<label for="ingName">Ingredient Name</label>
-			<input type="text" name="ingName" maxlength="50"/>
-			<label for="ingAmount">Ingredient Amount</label>
-			<input type="text" name="ingAmount" maxlength="10"/>
-			<label for="unitSelect">Unit of measurment</label>
-			<select>
-				<option value="cups">cups</option>
-				<option value="tbls">tablespoons</option>
-				<option value="tps">teaspoons</option>
 			
-			</select>
+				<label for="ingName" id="ingNumber">1</label>
+				<div id="ingDiv">
+				<input type="text" name="ingName" maxlength="50"/>
+				<label for="ingAmount">Ingredient Amount</label>
+				<input type="text" name="ingAmount" maxlength="10"/>
+				<label for="ingUnit">Unit of measurment</label>
+				<select name="ingUnit">
+					<option value="cups">cups</option>
+					<option value="tbls">tablespoons</option>
+					<option value="tps">teaspoons</option>
+				
+				</select>
+				<br>
+			</div>
+			<button type="button" id="moreButton">+</button>
 		</fieldset>
+		
 		
 		<fieldset>
 			<legend>Tags</legend>
 			<textarea name="tags" rows="5" columns="10">Enter tags</textarea>
 		</fieldset>
+		<input type="submit" name="submit" value="submit" />
 	</form>
+	
+	<script>
+	
+		var $ingBlock = $("#ingDiv").html();
+		$i = 1;
+		$("#moreButton").click(function() {
+			$i++;
+			var $number = "<p>$i</p>";
+			var $str = $("#ingNumber").text();
+			console.log($str);
+			$("#ingNumber").innerHTML = $i;
+			$("#ingDiv").append($i);
+			$("#ingDiv").append($ingBlock);
+			
+			
+		});
+		
+		
+	</script>
 </body>
 </html>
