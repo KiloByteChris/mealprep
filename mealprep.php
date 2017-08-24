@@ -8,6 +8,9 @@
 </head>
 
 <body>
+<?php
+	require "database/mysqli_connect.inc.php";
+?>
 	<header>
 		<h1>Meal Prep</h1>
 		
@@ -18,7 +21,7 @@
 	</header>
 	
 	<content>
-		<form action="mealprep_process.php" method="post">
+		<form action="php/mealprep_process.php" method="post">
 			<fieldset>
 			<legend>Sunday</legend>
 				<label for="sunBreak">Breakfast</label>
@@ -103,8 +106,76 @@
 				<input type="text" name="satDinner" value="" maxlength="50">
 				
 			</fieldset>
+			<input type="submit" value="submit" name="submit">
 		</form>
 	</content>
+	
+	<!-- Search Box -->
+	
+	<form action="mealprep.php" method="GET">
+		<fieldset>
+		<legend>Search Recipes</legend>
+			<label for="typeSelect">Select Search Type: </label>
+			<select name="typeSelect">
+				<option value="*"></option>
+				<option value="recipe_name">Recipe Name</option>
+				<option value="ingredient_name">Ingredient</option>
+				<option value="tag">Tag</option>
+			</select>
+			<label for="catagorySelect">Select Meal Type: </label>
+			<select name="catagorySelect">
+				<option value="*"></option>
+				<option value="breakfast">Breakfast</option>
+				<option value="lunch">Lunch</option>
+				<option value="dinner">Dinner</option>
+			</select>
+			<label for="searchBox"></label>
+			<input type="text" name="searchBox" maxlength="50">
+			<input type="submit" value="Search" name="search">
+		</fieldset>
+	</form>
+	
+	
+	<!-- Display Recipes -->
+	<div id="displayRecipesDiv">
+	
+	</div>
+	
+	<?php
+	if($_SERVER['REQUEST_METHOD'] == 'GET') {
+		if(isset($_GET['typeSelect'])) {
+			$type = $_GET['typeSelect'];
+		}
+		if(isset($_GET['catagorySelect'])) {
+			$catagory = $_GET['catagorySelect'];
+		}
+		if(isset($_GET['searchBox'])) {
+			$search = $_GET['searchBox'];
+		}
+		echo "hello";
+		echo "<br>";
+		var_dump($_GET);
+		echo "$type";
+		echo "$catagory";
+		echo "$search";
+		
+		
+		
+		if($type != 'tag') {
+			$sql = "SELECT recipe_info.recipe_name FROM recipe, recipe_info WHERE (recipe.recipe_name = recipe_info.recipe_name) AND ($type = '$search')";
+			echo "$sql";
+			$result = $db->query($sql);
+			echo "<ul>";
+			while($rows = $result->fetch_row()){
+				echo "<li>";
+				echo "$rows[0]";
+				echo "<li>";
+			}
+			echo "</ul>";
+		}
+	}
+	
+	?>
 
 </body>
 </html>
