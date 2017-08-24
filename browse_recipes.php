@@ -15,15 +15,17 @@
 		/* require "php/queries.php";  */
 		require "database/mysqli_connect.inc.php";
 
-		$sql = "SELECT recipe_name FROM recipe";
+		$sql = "SELECT * FROM recipe";
 		$result = $db->query($sql);
-		/* var_dump($result);  */
+		/* var_dump($result);   */
 
-		$rows = $result->fetch_assoc(); 
-		var_dump($rows);
+		$rows = $result->fetch_all(); 
+		/* var_dump($rows); */
 		
-		for($i = 0; $<=$rows.count; $i++){
-			
+		for($i = 0; $i<count($rows); $i++){
+			$linkName = $rows["$i"][1];
+			echo "<a href="."view_recipe.php/?recipe=$linkName".">$linkName</a>";
+			echo "<br>";
 		};
 
 	?>
