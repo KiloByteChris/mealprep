@@ -3,7 +3,12 @@
 <head>
 
 	<meta charset="utf-8" >
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<title>mealprep</title>
+	
 	
 </head>
 
@@ -25,7 +30,7 @@
 			<fieldset>
 			<legend>Sunday</legend>
 				<label for="sunBreak">Breakfast</label>
-				<input type="text" name="sunLunch" value="" maxlength="50">
+				<input type="text" name="sunLunch" value="" class="droppable" maxlength="50">
 			
 				<label for="sunLunch">Lunch</label>
 				<input type="text" name="sunLunch" value="" maxlength="50">
@@ -124,7 +129,7 @@
 			</select>
 			<label for="catagorySelect">Select Meal Type: </label>
 			<select name="catagorySelect">
-				<option value="*"></option>
+				<option value=""></option>
 				<option value="breakfast">Breakfast</option>
 				<option value="lunch">Lunch</option>
 				<option value="dinner">Dinner</option>
@@ -134,6 +139,7 @@
 			<input type="submit" value="Search" name="search">
 		</fieldset>
 	</form>
+	<p></p>
 	
 	
 	<!-- Display Recipes -->
@@ -142,6 +148,9 @@
 	</div>
 	
 	<?php
+	$type ='';
+	$catagory = '';
+	$search = '';
 	if($_SERVER['REQUEST_METHOD'] == 'GET') {
 		if(isset($_GET['typeSelect'])) {
 			$type = $_GET['typeSelect'];
@@ -152,30 +161,44 @@
 		if(isset($_GET['searchBox'])) {
 			$search = $_GET['searchBox'];
 		}
-		echo "hello";
-		echo "<br>";
-		var_dump($_GET);
-		echo "$type";
-		echo "$catagory";
-		echo "$search";
-		
 		
 		
 		if($type != 'tag') {
-			$sql = "SELECT recipe_info.recipe_name FROM recipe, recipe_info WHERE (recipe.recipe_name = recipe_info.recipe_name) AND ($type = '$search')";
-			echo "$sql";
+			$sql = "SELECT DISTINCT recipe_info.recipe_name FROM recipe, recipe_info WHERE (recipe.recipe_name = recipe_info.recipe_name) AND (recipe_info.$type = '$search') AND (recipe.recipe_catagory = '$catagory') ";
 			$result = $db->query($sql);
 			echo "<ul>";
 			while($rows = $result->fetch_row()){
-				echo "<li>";
-				echo "$rows[0]";
-				echo "<li>";
+				echo "<div class="."draggable"." class="."ui-widget-content".">";
+					echo "<li>";
+						echo "$rows[0]";
+					echo "</li>";
+				echo "</div>";
 			}
 			echo "</ul>";
 		}
 	}
 	
 	?>
+	<script>
+	$( function() {
+		$( ".draggable" ).draggable({
+			cursor : 'pointer',
+			revert : true,
+			revertDuration : 250,
+			start: function( event, ui ) {
+				$dropText = $(this).text();
+			}
+		});
+		$(".droppable").droppable({
+			activeClass : 'highlight',
+			tolerance : 'pointer',
+			drop : function(event, ui) {
+				$(this).val($dropText);
+				
+			}
+		});	
+	} );
+	</script>
 
 </body>
 </html>
