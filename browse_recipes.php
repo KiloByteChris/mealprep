@@ -23,8 +23,9 @@
 		/* var_dump($rows); */
 		
 		for($i = 0; $i<count($rows); $i++){
+			$linkId = $rows["$i"][0];
 			$linkName = $rows["$i"][1];
-			echo "<a href="."view_recipe.php/?recipe=$linkName".">$linkName</a>";
+			echo "<a href="."view_recipe.php/?recipe=$linkId".">$linkName</a>";
 			echo "<br>";
 		};
 

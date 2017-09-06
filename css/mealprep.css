@@ -1,0 +1,43 @@
+/*
+
+	CSS for mealprep.php
+	
+*/
+
+body {
+	
+}
+
+
+#pageWrapper {
+	
+}
+
+header {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+content {
+	width: 1200px;
+	margin: 0 auto;
+	
+}
+#calender {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.dayField {
+	float: left;
+	width: 200px;
+	margin: 10px auto;
+}
+
+#searchForm {
+	clear: both;
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.draggable {}

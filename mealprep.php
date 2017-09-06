@@ -5,6 +5,7 @@
 	<meta charset="utf-8" >
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="css/mealprep.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<title>mealprep</title>
@@ -16,6 +17,7 @@
 <?php
 	require "database/mysqli_connect.inc.php";
 ?>
+<div id="pageWrapper">
 	<header>
 		<h1>Meal Prep</h1>
 		
@@ -26,20 +28,23 @@
 	</header>
 	
 	<content>
-		<form action="php/mealprep_process.php" method="post">
-			<fieldset>
-			<legend>Sunday</legend>
+		<form id="calender" action="php/mealprep_process.php" method="post">
+			<fieldset class="dayField">
+			<!--<legend>Sunday</legend>
 				<label for="sunBreak">Breakfast</label>
+				<br>
 				<input type="text" name="sunLunch" value="" class="droppable" maxlength="50">
-			
+				<br>
 				<label for="sunLunch">Lunch</label>
+				<br>
 				<input type="text" name="sunLunch" value="" maxlength="50">
-				
+				<br>
 				<label for="sunDinner">Dinner</label>
+				<br>
 				<input type="text" name="sunDinner" value="" maxlength="50">
 				
-			</fieldset>
-			<fieldset>
+			</fieldset>-->
+			<fieldset class="dayField">
 			<legend>Monday</legend>
 				<label for="monBreak">Breakfast</label>
 				<input type="text" name="monLunch" value="" maxlength="50">
@@ -51,7 +56,7 @@
 				<input type="text" name="monDinner" value="" maxlength="50">
 				
 			</fieldset>
-			<fieldset>
+			<fieldset class="dayField">
 			<legend>Tuesday</legend>
 				<label for="tueBreak">Breakfast</label>
 				<input type="text" name="tueLunch" value="" maxlength="50">
@@ -63,7 +68,7 @@
 				<input type="text" name="tueDinner" value="" maxlength="50">
 				
 			</fieldset>
-			<fieldset>
+			<fieldset class="dayField">
 			<legend>Wednesday</legend>
 				<label for="wedBreak">Breakfast</label>
 				<input type="text" name="wedLunch" value="" maxlength="50">
@@ -75,7 +80,7 @@
 				<input type="text" name="wedDinner" value="" maxlength="50">
 				
 			</fieldset>
-			<fieldset>
+			<fieldset class="dayField">
 			<legend>Thursday</legend>
 				<label for="thuBreak">Breakfast</label>
 				<input type="text" name="thuLunch" value="" maxlength="50">
@@ -87,7 +92,7 @@
 				<input type="text" name="thuDinner" value="" maxlength="50">
 				
 			</fieldset>
-			<fieldset>
+			<fieldset class="dayField">
 			<legend>Friday</legend>
 				<label for="friBreak">Breakfast</label>
 				<input type="text" name="friLunch" value="" maxlength="50">
@@ -99,7 +104,7 @@
 				<input type="text" name="friDinner" value="" maxlength="50">
 				
 			</fieldset>
-			<fieldset>
+			<!-- <fieldset class="dayField">
 			<legend>Saturday</legend>
 				<label for="satBreak">Breakfast</label>
 				<input type="text" name="satLunch" value="" maxlength="50">
@@ -110,14 +115,14 @@
 				<label for="satDinner">Dinner</label>
 				<input type="text" name="satDinner" value="" maxlength="50">
 				
-			</fieldset>
+			</fieldset> -->
 			<input type="submit" value="submit" name="submit">
 		</form>
 	</content>
 	
 	<!-- Search Box -->
 	
-	<form action="mealprep.php" method="GET">
+	<form id="searchForm" action="mealprep.php" method="GET">
 		<fieldset>
 		<legend>Search Recipes</legend>
 			<label for="typeSelect">Select Search Type: </label>
@@ -180,6 +185,8 @@
 	
 	?>
 	<script>
+	$(":text").addClass("droppable");
+	
 	$( function() {
 		$( ".draggable" ).draggable({
 			cursor : 'pointer',
@@ -199,6 +206,6 @@
 		});	
 	} );
 	</script>
-
+</div> <!-- end page wrapper -->
 </body>
 </html>
