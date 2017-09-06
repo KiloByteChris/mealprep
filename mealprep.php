@@ -116,7 +116,8 @@
 				<input type="text" name="satDinner" value="" maxlength="50">
 				
 			</fieldset> -->
-			<input type="submit" value="submit" name="submit">
+			
+			<input id="submitButton" type="submit" value="submit" name="submit">
 		</form>
 	</content>
 	
