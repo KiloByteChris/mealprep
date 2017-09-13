@@ -15,8 +15,23 @@
 
 <body>
 <?php
+	
 	require "php/search_queries.php";
+	if($_SERVER['REQUEST_METHOD'] == 'GET') {
+			if(isset($_GET['typeSelect'])) {
+				$type = $_GET['typeSelect'];
+			}
+			if(isset($_GET['catagorySelect'])) {
+				$catagory = $_GET['catagorySelect'];
+			}
+			if(isset($_GET['searchBox'])) {
+				$search = $_GET['searchBox'];
+			}
+	$searchResults = searchQuery($type, $catagory, $searchBox);
+	echo $searchResults;
+	var_dump($searchResults);
 ?>
+
 
 
 <div id="pageWrapper">
@@ -40,7 +55,7 @@
 	
 		<!-- Search Box -->
 		
-		<form id="searchForm" action="php/search_queries.php" method="GET">
+		<form id="searchForm" action="" method="GET">
 			<fieldset>
 			<legend>Search Recipes</legend>
 				<label for="typeSelect">Select Search Type: </label>
