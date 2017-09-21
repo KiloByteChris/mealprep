@@ -8,7 +8,102 @@ if(!isset($_SESSION)){
 }
 
 var_dump($_POST);
+
+/* function createCalanderDay2($day){
+	$breakfastLabel = $dayLower + "Breakfast";
+	$lunchLabel = $dayLower + "Lunch";
+	$dinnerLabel = $dayLower + "Dinner";
+			
+	$dayString = "";
+	$dayString += "<div>";
+	$dayString += "<fieldset class="."dayField".">";
+	$dayString += "<legend>" . $day . "</legend>";
+			
+	$dayString += "<label for=" . $breakfastLabel . ">Breakfast</label>";
+	$dayString += "<input type=\"text\" name=" . $breakfastLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+			
+	$dayString += "<label for=" . $lunchLabel . ">Lunch</label>";
+	$dayString += "<input type=\"text\" name=" . $lunchLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+	
+	$dayString += "<label for=" . $dinnerLabel . ">Dinner</label>";
+	$dayString += "<input type=\"text\" name=" . $dinnerLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+			
+	$dayString += "</fieldset>";
+	$dayString += "</div>"; 
+	return $dayString;
+	echo $dayString;
+}; */
+
+function createCalanderDay($day){
+	$today = $day;
+	$dayLower = strtolower($today);
+	$breakfastLabel = $dayLower . "Breakfast";
+	$lunchLabel = $dayLower . "Lunch";
+	$dinnerLabel = $dayLower . "Dinner";
+	
+	$dayString = "";
+	$dayString .= "<div>";
+	$dayString .= "<fieldset class="."dayField".">";
+	$dayString .= "<legend>" . $day . "</legend>";
+			
+	$dayString .= "<label for=" . $breakfastLabel . ">Breakfast</label>";
+	$dayString .= "<input type=\"text\" name=" . $breakfastLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+			
+	$dayString .= "<label for=" . $lunchLabel . ">Lunch</label>";
+	$dayString .= "<input type=\"text\" name=" . $lunchLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+	
+	$dayString .= "<label for=" . $dinnerLabel . ">Dinner</label>";
+	$dayString .= "<input type=\"text\" name=" . $dinnerLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+			
+	$dayString .= "</fieldset>";
+	$dayString .= "</div>"; 
+	
+	return $dayString;
+};
+
+
+//Form process takes the info from the checkboxes and creates the calander days
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+	$calanderString = "";
+	if(isset($_POST['sundayBox'])){
+		$currentDay = "Sunday";
+		$newDay = createCalanderDay($currentDay);
+		$calanderString .= $newDay; 
+	}
+	if(isset($_POST['mondayBox'])){
+		$currentDay = "Monday";
+		$newDay = createCalanderDay($currentDay);
+		$calanderString .= $newDay; 
+	}
+	if(isset($_POST['tuesdayBox'])){
+		$currentDay = "Tuesday";
+		$newDay = createCalanderDay($currentDay);
+		$calanderString .= $newDay; 
+	}
+	if(isset($_POST['wednesdayBox'])){
+		$currentDay = "Wednesday";
+		$newDay = createCalanderDay($currentDay);
+		$calanderString .= $newDay; 
+	}
+	if(isset($_POST['thursdayBox'])){
+		$currentDay = "Thursday";
+		$newDay = createCalanderDay($currentDay);
+		$calanderString .= $newDay; 
+	}
+	if(isset($_POST['fridayBox'])){
+		$currentDay = "Friday";
+		$newDay = createCalanderDay($currentDay);
+		$calanderString .= $newDay; 
+	}
+	if(isset($_POST['saturdayBox'])){
+		$currentDay = "Saturday";
+		$newDay = createCalanderDay($currentDay);
+		$calanderString .= $newDay; 
+	}
+}
+
 ?>
+
 
 <head>
 
@@ -47,18 +142,25 @@ var_dump($_POST);
 	
 	<content>
 	
+		
+	
+	
+		<!-- THE MASTER FORM!! -->
+		<form id="searchForm" action="" method="POST">
+		
 		<!-- form for choosing the days of the week -->
 		<div id="chooseDaysDiv">
 		</div>
 		
 		<!-- form for meal prep calander -->
 		<div id="calanderDiv">
+		<?php
+			echo $calanderString;
+		?>
 		</div>
-	
-	
-		<!-- Search Box -->
-		<form id="searchForm" action="" method="GET">
 			<fieldset>
+			
+			<!-- Search Box -->
 			<legend>Search Recipes</legend>
 				<label for="typeSelect">Select Search Type: </label>
 				<select name="typeSelect">
@@ -78,6 +180,8 @@ var_dump($_POST);
 				<input type="text" name="searchBox" maxlength="50">
 				<input type="submit" value="Search" name="search">
 			</fieldset>
+			
+			
 		</form>
 
 		<!-- Display Recipes -->
@@ -91,57 +195,6 @@ var_dump($_POST);
 <script>
 	//Javascript for choosing the days and generating the calander
 	
-	function Calander() {
-	
-		//creates the html for each calander day
-		this.day = function(day) {
-			
-			var dayLower = day.toLowerCase()
-			var breakfastLabel = dayLower + "Breakfast";
-			var lunchLabel = dayLower + "Lunch";
-			var dinnerLabel = dayLower + "Dinner";
-			
-			var dayString = "";
-			dayString += "<div>";
-			dayString += "<fieldset class=\"dayField\">";
-			dayString += "<legend>" + day + "</legend>";
-			
-			dayString += "<label for=" + breakfastLabel + ">Breakfast</label>";
-			dayString += "<input type=\"text\" name=" + breakfastLabel + " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
-			
-			dayString += "<label for=" + lunchLabel + ">Lunch</label>";
-			dayString += "<input type=\"text\" name=" + lunchLabel + " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
-			
-			dayString += "<label for=" + dinnerLabel + ">Dinner</label>";
-			dayString += "<input type=\"text\" name=" + dinnerLabel + " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
-			
-			dayString += "</fieldset>";
-			dayString += "</div>"; 
-			return dayString;
-		}
-	
-		//updates the calander based on the input from the form
-		this.update = function(calanderDiv, checkBoxes) {
-			//select the div where the calander is going to be once it's generated
-			var calanderDiv = document.getElementById("calanderDiv");
-			calanderDiv.innerHTML = "";
-			//Select the checkboxes to see if their value is equa to "checked"
-			var checkBoxes = document.getElementsByClassName("checkbox");
-			var dayList = [];
-			for(var i = 0; i < checkBoxes.length; i++) {
-				if(checkBoxes[i].checked == true){
-				dayList.push(checkBoxes[i]);
-				}
-			}
-			
-			for(var i = 0; i<dayList.length; i++) {
-				
-				dayStuff = weekForm.day(dayList[i].value);
-				calanderDiv.innerHTML += dayStuff;
-			}
-		}
-	}
-	
 	//a list of the days of the week
 	var fullList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; 
 	var chooseDaysDiv = document.getElementById("chooseDaysDiv");
@@ -150,11 +203,12 @@ var_dump($_POST);
 	function chooseDays(fullList) {
 		var chooseDaysString = "";
 		chooseDaysString += "<div id=\"chooseDaysFormDiv\">";
-		chooseDaysString += "<form id=\"chooseDaysForm\" action=\"\" method=\"POST\">";
+		
 		
 		for(var i = 0; i < fullList.length; i++){
 			var day = fullList[i];
-			var dayLabel = day + "box";
+			var dayLower = day.toLowerCase();
+			var dayLabel = dayLower + "Box";
 			
 			
 			chooseDaysString += "<label for=" + dayLabel +">" + day + "</label>";
@@ -170,19 +224,15 @@ var_dump($_POST);
 		}
 		
 		chooseDaysString += "</select>";
-		chooseDaysString += "<button type=\"button\" id=\"daysButton\" onclick=\"weekForm.update()\">Create Calander</button>";
+		chooseDaysString += "<input type=\"submit\" id=\"daysButton\" name=\"createCalander\" value=\"CreateCalander\" />";
+		
 		chooseDaysString += "</div>";
-		chooseDaysString += "</form>";
 		return chooseDaysString;
 	}
 	
 	//uses the list of days to generate a form with checkboxese for each day
 	var chooseDaysFormString = chooseDays(fullList);
 	chooseDaysDiv.innerHTML += chooseDaysFormString;
-	
-	
-	//Create a new calander
-	var weekForm =  new Calander();
 	
 	$("recipeInput").addClass("droppable");
 	
