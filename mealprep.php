@@ -3,36 +3,9 @@
 <?php
 if(!isset($_SESSION)){
 	session_start();
-	$_SESSION['user_name'] = "CHRIS";
-	var_dump($_SESSION);
 }
 
 var_dump($_POST);
-
-/* function createCalanderDay2($day){
-	$breakfastLabel = $dayLower + "Breakfast";
-	$lunchLabel = $dayLower + "Lunch";
-	$dinnerLabel = $dayLower + "Dinner";
-			
-	$dayString = "";
-	$dayString += "<div>";
-	$dayString += "<fieldset class="."dayField".">";
-	$dayString += "<legend>" . $day . "</legend>";
-			
-	$dayString += "<label for=" . $breakfastLabel . ">Breakfast</label>";
-	$dayString += "<input type=\"text\" name=" . $breakfastLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
-			
-	$dayString += "<label for=" . $lunchLabel . ">Lunch</label>";
-	$dayString += "<input type=\"text\" name=" . $lunchLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
-	
-	$dayString += "<label for=" . $dinnerLabel . ">Dinner</label>";
-	$dayString += "<input type=\"text\" name=" . $dinnerLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
-			
-	$dayString += "</fieldset>";
-	$dayString += "</div>"; 
-	return $dayString;
-	echo $dayString;
-}; */
 
 function createCalanderDay($day){
 	$today = $day;
@@ -47,13 +20,16 @@ function createCalanderDay($day){
 	$dayString .= "<legend>" . $day . "</legend>";
 			
 	$dayString .= "<label for=" . $breakfastLabel . ">Breakfast</label>";
-	$dayString .= "<input type=\"text\" name=" . $breakfastLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+	$labelValue1 = checkisset($breakfastLabel);
+	$dayString .= "<input type=\"text\" name=" . $breakfastLabel . " value=\"$labelValue1\" class=\"recipeInput\" maxlength=\"50\">";
 			
 	$dayString .= "<label for=" . $lunchLabel . ">Lunch</label>";
-	$dayString .= "<input type=\"text\" name=" . $lunchLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+	$labelValue2 = checkisset($lunchLabel);
+	$dayString .= "<input type=\"text\" name=" . $lunchLabel . " value=\"$labelValue2\" class=\"recipeInput\" maxlength=\"50\">";
 	
 	$dayString .= "<label for=" . $dinnerLabel . ">Dinner</label>";
-	$dayString .= "<input type=\"text\" name=" . $dinnerLabel . " value=\"\" class=\"recipeInput\" maxlength=\"50\">";
+	$labelValue3 = checkisset($dinnerLabel);
+	$dayString .= "<input type=\"text\" name=" . $dinnerLabel . " value=\"$labelValue3\" class=\"recipeInput\" maxlength=\"50\">";
 			
 	$dayString .= "</fieldset>";
 	$dayString .= "</div>"; 
@@ -61,9 +37,23 @@ function createCalanderDay($day){
 	return $dayString;
 };
 
+//Makes the form sticky
+function checkisset($label) {
+	$label = $label;
+	$value = "";
+	if(isset($_POST[$label])) {
+		$value = $_POST[$label];
+	}
+	return $value;
+}
 
-//Form process takes the info from the checkboxes and creates the calander days
+//FORM PROCESS
 if($_SERVER['REQUEST_METHOD'] == "POST"){
+	if(isset($_POST['sundayBreakfast'])){
+		$sundayBreakfast = $_POST['sundayBreakfast'];
+	}
+	
+	//Form process takes the info from the checkboxes and creates the calander days
 	$calanderString = "";
 	if(isset($_POST['sundayBox'])){
 		$currentDay = "Sunday";
@@ -230,7 +220,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 		return chooseDaysString;
 	}
 	
-	//uses the list of days to generate a form with checkboxese for each day
+	//uses the list of days to generate checkboxese for each day
 	var chooseDaysFormString = chooseDays(fullList);
 	chooseDaysDiv.innerHTML += chooseDaysFormString;
 	
