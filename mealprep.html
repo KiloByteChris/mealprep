@@ -1,5 +1,12 @@
 <!DOCTYPE HTML>
 <html lang="en">
+<?php
+	if(!isset($_SESSION)) {
+		session_start();
+		$_SESSION["username"] = "Chris";
+	}
+?>
+
 <head>
 
 	<meta charset="utf-8" >
@@ -15,7 +22,6 @@
 
 <body>
 <?php
-	
 	require "php/search_queries.php";
 	if($_SERVER['REQUEST_METHOD'] == 'GET') {
 			if(isset($_GET['typeSelect'])) {
@@ -146,7 +152,7 @@
 	function chooseDays(fullList) {
 		var chooseDaysString = "";
 		chooseDaysString += "<div id=\"chooseDaysFormDiv\">";
-		chooseDaysString += "<form id=\"chooseDaysForm\">";
+		chooseDaysString += "<form id=\"chooseDaysForm\" action=\"mealprep.html\" method=\"post\">";
 		
 		for(var i = 0; i < fullList.length; i++){
 			var day = fullList[i];
@@ -157,6 +163,15 @@
 			chooseDaysString += "<input type=\"checkbox\" class=\"checkbox\" value=" + day + " name=" + dayLabel + ">";	
 			
 		}
+		
+		//Select box for choosing the number of servings
+		chooseDaysString += "<label for=\"servingsSelect\">Number of Servings</label>";
+		chooseDaysString += "<select name=\"servingSelect\" id=\"servingSelect\">";
+		for(var i = 1; i <= 10; i++){
+			chooseDaysString += "<option value="+ i +">" + i + "</option>";
+		}
+		
+		chooseDaysString += "</select>";
 		chooseDaysString += "<button type=\"button\" id=\"daysButton\" onclick=\"weekForm.update()\">Create Calander</button>";
 		chooseDaysString += "</div>";
 		chooseDaysString += "</form>";
