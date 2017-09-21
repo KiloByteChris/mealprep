@@ -49,11 +49,12 @@ function checkisset($label) {
 
 //FORM PROCESS
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-	if(isset($_POST['sundayBreakfast'])){
-		$sundayBreakfast = $_POST['sundayBreakfast'];
-	}
+	
 	
 	//Form process takes the info from the checkboxes and creates the calander days
+	if(isset($_POST['Create'])){
+		
+	};
 	$calanderString = "";
 	if(isset($_POST['sundayBox'])){
 		$currentDay = "Sunday";
@@ -90,6 +91,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 		$newDay = createCalanderDay($currentDay);
 		$calanderString .= $newDay; 
 	}
+	
+	//FORM PROCESS if the form is posted through the search button, keep the calander and it's information
 }
 
 ?>
@@ -214,7 +217,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 		}
 		
 		chooseDaysString += "</select>";
-		chooseDaysString += "<input type=\"submit\" id=\"daysButton\" name=\"createCalander\" value=\"CreateCalander\" />";
+		chooseDaysString += "<input type=\"submit\" id=\"daysButton\" name=\"createCalander\" value=\"Create\" />";
 		
 		chooseDaysString += "</div>";
 		return chooseDaysString;
