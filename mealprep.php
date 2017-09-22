@@ -6,6 +6,38 @@ if(!isset($_SESSION)){
 }
 
 var_dump($_POST);
+$fullList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; 
+
+//function creates the form with check boxes for selecting which days of the week
+function createDayCheckboxes($fullList) {
+	$chooseDaysString = "";
+	$chooseDaysString .= "<div id=\"chooseDaysDiv\">";
+		
+	for($i = 0; $i < count($fullList); $i++){
+		$day = $fullList[$i];
+		$dayLower = strtolower($day);
+		$dayLabel = $dayLower . "Box";
+		
+		$chooseDaysString .= "<label for=" . $dayLabel .">" . $day . "</label>";
+		$chooseDaysString .= "<input type=\"checkbox\" class=\"checkbox\" value=" . $day . " name=" . $dayLabel . ">";	
+			
+	}
+		
+	//Select box for choosing the number of servings
+	$chooseDaysString .= "<label for=\"servingsSelect\">Number of Servings</label>";
+	$chooseDaysString .= "<select name=\"servingSelect\" id=\"servingSelect\">";
+	for($i = 1; $i <= 10; $i++){
+		$chooseDaysString .= "<option value=". $i .">" . $i . "</option>";
+	}
+		
+	$chooseDaysString .= "</select>";
+	$chooseDaysString .= "<input type=\"submit\" id=\"daysButton\" name=\"createCalander\" value=\"Create\" />";
+		
+	$chooseDaysString .= "</div>";
+	return $chooseDaysString;
+}
+$chooseDayString = createDayCheckboxes($fullList);
+
 
 function createCalanderDay($day){
 	$today = $day;
@@ -93,6 +125,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	}
 	
 	//FORM PROCESS if the form is posted through the search button, keep the calander and it's information
+	if(isset($_POST['search'])){
+		
+	}
 }
 
 ?>
@@ -139,17 +174,20 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	
 	
 		<!-- THE MASTER FORM!! -->
-		<form id="searchForm" action="" method="POST">
+		<form id="masterForm" action="" method="POST">
 		
 		<!-- form for choosing the days of the week -->
 		<div id="chooseDaysDiv">
+			<?php
+				echo $chooseDayString;
+			?>	
 		</div>
 		
 		<!-- form for meal prep calander -->
 		<div id="calanderDiv">
-		<?php
-			echo $calanderString;
-		?>
+			<?php
+				echo $calanderString;
+			?>
 		</div>
 			<fieldset>
 			
@@ -186,46 +224,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 </div><!-- end wrapper -->
 
 <script>
-	//Javascript for choosing the days and generating the calander
-	
-	//a list of the days of the week
-	var fullList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; 
-	var chooseDaysDiv = document.getElementById("chooseDaysDiv");
-	
-	//function creates the form with check boxes for selecting which days of the week
-	function chooseDays(fullList) {
-		var chooseDaysString = "";
-		chooseDaysString += "<div id=\"chooseDaysFormDiv\">";
-		
-		
-		for(var i = 0; i < fullList.length; i++){
-			var day = fullList[i];
-			var dayLower = day.toLowerCase();
-			var dayLabel = dayLower + "Box";
-			
-			
-			chooseDaysString += "<label for=" + dayLabel +">" + day + "</label>";
-			chooseDaysString += "<input type=\"checkbox\" class=\"checkbox\" value=" + day + " name=" + dayLabel + ">";	
-			
-		}
-		
-		//Select box for choosing the number of servings
-		chooseDaysString += "<label for=\"servingsSelect\">Number of Servings</label>";
-		chooseDaysString += "<select name=\"servingSelect\" id=\"servingSelect\">";
-		for(var i = 1; i <= 10; i++){
-			chooseDaysString += "<option value="+ i +">" + i + "</option>";
-		}
-		
-		chooseDaysString += "</select>";
-		chooseDaysString += "<input type=\"submit\" id=\"daysButton\" name=\"createCalander\" value=\"Create\" />";
-		
-		chooseDaysString += "</div>";
-		return chooseDaysString;
-	}
-	
-	//uses the list of days to generate checkboxese for each day
-	var chooseDaysFormString = chooseDays(fullList);
-	chooseDaysDiv.innerHTML += chooseDaysFormString;
 	
 	$("recipeInput").addClass("droppable");
 	
