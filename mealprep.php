@@ -5,6 +5,20 @@ if(!isset($_SESSION)){
 	session_start();
 }
 
+# mysqli_connect.inc.php
+
+# Create a new connection to the database
+$db = new mysqli('localhost','root','','mealprep');
+
+# If there was an error connecting to the database
+if ($db->connect_error) {
+	$error = $db->connect_error;
+	echo $error;
+} // end if
+
+# Set the character encoding of the database connection to UTF-8
+$db->set_charset('utf8');
+
 var_dump($_POST);
 $fullList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; 
 
@@ -78,7 +92,7 @@ function createCalanderDay($day){
 	return $dayString;
 };
 
-//Makes the form sticky
+//Makes the calander days sticky
 function checkisset($label) {
 	$label = $label;
 	$value = "";
@@ -135,7 +149,32 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	
 	//FORM PROCESS if the form is posted through the search button, keep the calander and it's information
 	if(isset($_POST['search'])){
+		$type = $_POST['typeSelect'];
+		$catagory = $_POST['catagorySelect'];
+		$search = $_POST['searchBox'];
 		
+		function searchQuery($type, $catagory, $searchBox, $db) {
+			$type = $type;
+			$catagory = $catagory;
+			$search = $searchBox;
+			$returnString = '';
+		
+			if($type != 'tag') {
+				$sql = "SELECT DISTINCT recipe_info.recipe_name FROM recipe, recipe_info WHERE (recipe.recipe_name = recipe_info.recipe_name) AND (recipe_info.$type = '$search') AND (recipe.recipe_catagory = '$catagory') ";
+				$result = $db->query($sql);
+				$returnString .= "<ul>";
+				while($rows = $result->fetch_row()){
+					$returnString .= "<div class="."draggable"." class="."ui-widget-content".">";
+						$returnString .= "<li>";
+							$returnString .= "$rows[0]";
+						$returnString .= "</li>";
+					$returnString .= "</div>";
+				}
+				$returnString .= "</ul>";
+			}
+			return $returnString;
+		}
+	$searchResults = searchQuery($type, $catagory, $search, $db);
 	}
 }
 
@@ -218,7 +257,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 				</select>
 				<label for="searchBox"></label>
 				<input type="text" name="searchBox" maxlength="50">
-				<input type="submit" value="Search" name="search">
+				<input type="submit" value="search" name="search">
 			</fieldset>
 			
 			
@@ -226,6 +265,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 		<!-- Display Recipes -->
 		<div id="displayRecipesDiv">
+			<?php
+				echo $searchResults;
+			?>
 		</div>
 	
 	</content>

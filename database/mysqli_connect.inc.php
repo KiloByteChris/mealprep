@@ -11,3 +11,4 @@ if ($db->connect_error) {
 
 # Set the character encoding of the database connection to UTF-8
 $db->set_charset('utf8');
+?>
