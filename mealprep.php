@@ -19,7 +19,14 @@ function createDayCheckboxes($fullList) {
 		$dayLabel = $dayLower . "Box";
 		
 		$chooseDaysString .= "<label for=" . $dayLabel .">" . $day . "</label>";
-		$chooseDaysString .= "<input type=\"checkbox\" class=\"checkbox\" value=" . $day . " name=" . $dayLabel . ">";	
+		
+		//Sets the default value to not be checked
+		//If the form has been posted and the box is checked, make it sticky
+		$checked = "";
+		if(isset($_POST[$dayLabel])){
+			$checked = "checked";
+		}
+		$chooseDaysString .= "<input type=\"checkbox\" class=\"checkbox\" value=" . $day . " name=" . $dayLabel . " $checked>";	
 			
 	}
 		
@@ -36,10 +43,12 @@ function createDayCheckboxes($fullList) {
 	$chooseDaysString .= "</div>";
 	return $chooseDaysString;
 }
+//Calls the function and assigns the result to a variable
 $chooseDayString = createDayCheckboxes($fullList);
 
-
+//Creates the html for each calander day
 function createCalanderDay($day){
+	
 	$today = $day;
 	$dayLower = strtolower($today);
 	$breakfastLabel = $dayLower . "Breakfast";
