@@ -1,0 +1,14 @@
+Stuff to do
+
+1 - Add more recipies to the database. Watch for bugs
+
+2 - Search function
+    -remove the default search when the page first loads
+    -for now, remove the catagory requirment for the search. Just use search type and the search box.
+    -Make the search work with the enter key by splitting the app into 2 forms.
+
+3 - Calander
+    -Make the number of servings sticky in the select box.
+    -Later... find a way to handle the user changing the calander information when portions are already filled out.
+    -Create the servings-leftovers functionality
+    -Why doesn't drag and drop work?

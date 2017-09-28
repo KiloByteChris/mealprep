@@ -1,16 +1,17 @@
 /*
 
 	CSS for mealprep.php
-	
+
 */
 
 body {
-	
+
 }
 
 
-#pageWrapper {
-	
+#wrapper {
+	width: 1200px;
+	margin: 0px auto;
 }
 
 header {
@@ -21,7 +22,7 @@ header {
 content {
 	width: 1200px;
 	margin: 0 auto;
-	
+
 }
 
 #calender {
@@ -49,10 +50,8 @@ content {
 
 .draggable {
 	list-style: none;
-	padding: 10px;
 	border: 1px solid #000;
 	border-radius: 10px;
 	background-color: #33afff;
-	width: 150px;
 	font-size: 1.5em;
 }
