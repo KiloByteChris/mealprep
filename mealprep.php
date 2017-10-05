@@ -5,6 +5,8 @@ if(!isset($_SESSION)){
 	session_start();
 }
 
+echo "<div value=\"5\"></div>";
+
 //Initialize the $searchResults variable
 $searchResults = "";
 //initialize the $calanderString Variable
@@ -52,8 +54,17 @@ function createDayCheckboxes($fullList) {
 	//Select box for choosing the number of servings
 	$chooseDaysString .= "<label for=\"servingsSelect\">Number of Servings</label>";
 	$chooseDaysString .= "<select name=\"servingSelect\" id=\"servingSelect\">";
+	$servingValue = "";
+	if(isset($_POST['servingSelect'])){
+		$servingValue = $_POST['servingSelect'];
+	}
+
 	for($i = 1; $i <= 10; $i++){
-		$chooseDaysString .= "<option value=". $i .">" . $i . "</option>";
+		$chooseDaysString .= "<option ";
+		if($i == $servingValue){
+			$chooseDaysString .= "selected=\"selected\" ";
+		}
+		$chooseDaysString .= "value=". $i .">" . $i . "</option>";
 	}
 
 	$chooseDaysString .= "</select>";
@@ -62,6 +73,7 @@ function createDayCheckboxes($fullList) {
 	$chooseDaysString .= "</div>";
 	return $chooseDaysString;
 }
+
 //Calls the function and assigns the result to a variable
 $chooseDayString = createDayCheckboxes($fullList);
 
@@ -158,6 +170,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 		//$catagory = $_POST['catagorySelect'];
 		$search = $_POST['searchBox'];
 
+		//DATABASE QUERY
 		function searchQuery($type, /*$catagory,*/ $searchBox, $db) {
 			$type = $type;
 			//$catagory = $catagory;
@@ -165,15 +178,16 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 			$returnString = '';
 
 			if($type != 'tag') {
-				$sql = "SELECT DISTINCT recipe_info.recipe_name FROM recipe, recipe_info WHERE (recipe.recipe_name = recipe_info.recipe_name) AND (recipe_info.$type = '$search')";
+				$sql = "SELECT DISTINCT recipe_info.recipe_name, recipe.servings FROM recipe, recipe_info WHERE (recipe.recipe_name = recipe_info.recipe_name) AND (recipe_info.$type = '$search')";
 				$result = $db->query($sql);
 				$returnString .= "<ul>";
 				while($rows = $result->fetch_row()){
-					$returnString .= "<div class="."draggable"." class="."ui-widget-content".">";
+					$returnString .= "<div class="."draggable"." class="."ui-widget-content"." class="."recipeDiv"." >";
 						$returnString .= "<li>";
 							$returnString .= "$rows[0]";
 						$returnString .= "</li>";
 					$returnString .= "</div>";
+					//Set serving value
 				}
 				$returnString .= "</ul>";
 			}
