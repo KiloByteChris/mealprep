@@ -181,7 +181,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 				$returnString .= "<dl>";
 				while($rows = $result->fetch_row()){
 					/*$returnString .= "<div class="."draggable"." class="."ui-widget-content"." class="."recipeDiv"." >";*/
-						$returnString .= "<dt class="."draggable"." class="."ui-widget-content"." value=".$rows[1].">";
+						$returnString .= "<dt class="."draggable"." class="."ui-widget-content"." name=".$rows[1].">";
 							$returnString .= "$rows[0]";
 
 						$returnString .= "</dt>";
@@ -295,7 +295,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 <script>
 
+	//Make the text boxes in the form droppable
 	$(".recipeInput").addClass("droppable");
+
 
 	$( function() {
 		$( ".draggable" ).draggable({
@@ -303,18 +305,36 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 			revert : true,
 			revertDuration : 250,
 			start: function( event, ui ) {
+				//Select the recipe name
 				$dropText = $(this).text();
+				$servingValue = $(this).context.attributes[1].value;
 				console.log($dropText);
+				console.log($servingValue);
 			}
 		});
+
+		//get the number of people
+		var people = $("#servingSelect").val();
+		console.log(people);
 		$(".droppable").droppable({
 			activeClass : 'highlight',
 			tolerance : 'pointer',
-			drop : function(event, ui) {
+			drop : function(event, ui, droptext) {
 				$(this).val($dropText);
 				console.log($dropText);
+				//Create a function that inputs the serving value of the recipe, subtracts the selected servings, and outputs the new number to a div next to the textbox
+				var leftoverServings = servingMath(people, $servingValue);
+				console.log(leftoverServings);
 			}
 		});
+
+		//Function to calculate servings
+		function servingMath(people, recipeServings) {
+			var people = people;
+			var recipeServings = recipeServings;
+			var leftover = recipeServings - people;
+			return leftover;
+		}
 	} );
 </script>
 </body>
