@@ -96,20 +96,20 @@ function createCalanderDay($day){
 	$dayString .= "<label for=" . $breakfastLabel . ">Breakfast</label>";
 	$labelValue1 = checkisset($breakfastLabel);
 	$dayString .= "<input type=\"text\" name=" . $breakfastLabel . " value=\"$labelValue1\" class=\"recipeInput\" maxlength=\"50\" />";
-	$dayString .= "<div "."id=".$breakfastDiv." ></div>";
+	$dayString .= "<div "."id=".$breakfastDiv." class=\"leftoverDiv\"></div>";
 
 	//Lunch
 	$dayString .= "<label for=" . $lunchLabel . ">Lunch</label>";
 	$labelValue2 = checkisset($lunchLabel);
 	$dayString .= "<input type=\"text\" name=" . $lunchLabel . " value=\"$labelValue2\" class=\"recipeInput\" maxlength=\"50\" />";
-	$dayString .= "<div "."id=".$lunchDiv." ></div>";
+	$dayString .= "<div "."id=".$lunchDiv." class=\"leftoverDiv\"></div>";
 
 
 	//Dinner
 	$dayString .= "<label for=" . $dinnerLabel . ">Dinner</label>";
 	$labelValue3 = checkisset($dinnerLabel);
 	$dayString .= "<input type=\"text\" name=" . $dinnerLabel . " value=\"$labelValue3\" class=\"recipeInput\" maxlength=\"50\" />";
-	$dayString .= "<div "."id=".$dinnerDiv." ></div>";
+	$dayString .= "<div "."id=".$dinnerDiv." class=\"leftoverDiv\"></div>";
 
 	$dayString .= "</fieldset>";
 	$dayString .= "</div>";
@@ -308,6 +308,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	//Make the text boxes in the form droppable
 	$(".recipeInput").addClass("droppable");
 
+	//Make the leftover Divs draggable
+	$(".leftoverDiv").addClass("draggable");
+
 	//get the number of people
 	var people = $("#servingSelect").val();
 
@@ -331,7 +334,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 				$dropText = $(this).text();
 				//Select the serving value
 				$servingValue = $(this).context.attributes[1].value;
-				//console.log($(this));
+				console.log($(this));
+				if(isNaN($servingValue)) {
+					$servingValue = $(this).context.value;
+				}
 			}
 		});
 
@@ -341,23 +347,27 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 			activeClass : 'highlight',
 			tolerance : 'pointer',
 			drop : function(event, ui, droptext) {
+
 				//Makes the text appear in the textbox
 				$(this).val($dropText);
-				// calculate the number of servings left over
-				var leftoverServings = servingMath(people, $servingValue);
 
-				//log (this) as an object
-				//console.log($(this));
+				// calculate the number of servings left over
+				var leftoverServings = servingMath(people, $servingValue)
 
 				//Select the name of the text box
 				var dayLabel = $(this).context.name;
 
+				//Create a string to select the correct div
 				var leftoverDiv = "#" + dayLabel + "Div";
 				console.log(leftoverDiv);
-				var theDiv = $(leftoverDiv);
-				console.log(theDiv);
-				theDiv.text(leftoverServings);
-				//$(this).append("<p>" + leftoverServings + "</p>");
+
+				//Select Div
+				var workingDiv = $(leftoverDiv);
+				console.log(workingDiv);
+
+				//Display leftover servings in the div
+				workingDiv.text(leftoverServings);
+				workingDiv.val(leftoverServings);
 			}
 		});
 	} );

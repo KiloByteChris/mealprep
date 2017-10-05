@@ -12,19 +12,27 @@ Stuff to do
 3 - Calander
     XMake the number of servings sticky in the select box.
     -Later... find a way to handle the user changing the calander information when portions are already filled out.
+        -Add a button the clear the recipe
+            ?How does this effect other days?
     -Create the servings-leftovers functionality
         XCreate a div that will display leftovers on the end of the text box for the mealprep
-        -When you drag a recipie
+        -DRAG AND DROP FUNCTIONS
             Xuse the recipe servings and the number of people. a function
             Xsubtract the number of people from the number of servings
             Xdisplay the difference
             -make the difference draggable, repeat process
+                -leftovers need to input text into the textboxes instead of numbers
+                -Remove the old leftovers and only keep the new
+                -leftovers need to be labeled
             ?What happens if theres a half portion being used as a full portion? error
-            ?What if there are not enough servings in the recipe to feed everybody? 
+            ?What if there are not enough servings in the recipe to feed everybody?
     X Why doesn't drag and drop work?
+
 
 4 - Create a way to save the meal plan
     - Must be alble to name the meal plan
     - Database needs to be able to handle saved mealplans
 
 5 - Start moving code into their own files.
+
+6 - Style
