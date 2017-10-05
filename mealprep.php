@@ -81,25 +81,35 @@ function createCalanderDay($day){
 	$today = $day;
 	$dayLower = strtolower($today);
 	$breakfastLabel = $dayLower . "Breakfast";
+	$breakfastDiv = $breakfastLabel . "Div";
 	$lunchLabel = $dayLower . "Lunch";
+	$lunchDiv = $lunchLabel . "Div";
 	$dinnerLabel = $dayLower . "Dinner";
+	$dinnerDiv = $dinnerLabel . "Div";
 
 	$dayString = "";
 	$dayString .= "<div>";
 	$dayString .= "<fieldset class="."dayField".">";
 	$dayString .= "<legend>" . $day . "</legend>";
 
+	//Breakfast
 	$dayString .= "<label for=" . $breakfastLabel . ">Breakfast</label>";
 	$labelValue1 = checkisset($breakfastLabel);
-	$dayString .= "<input type=\"text\" name=" . $breakfastLabel . " value=\"$labelValue1\" class=\"recipeInput\" maxlength=\"50\">";
+	$dayString .= "<input type=\"text\" name=" . $breakfastLabel . " value=\"$labelValue1\" class=\"recipeInput\" maxlength=\"50\" />";
+	$dayString .= "<div "."id=".$breakfastDiv." ></div>";
 
+	//Lunch
 	$dayString .= "<label for=" . $lunchLabel . ">Lunch</label>";
 	$labelValue2 = checkisset($lunchLabel);
-	$dayString .= "<input type=\"text\" name=" . $lunchLabel . " value=\"$labelValue2\" class=\"recipeInput\" maxlength=\"50\">";
+	$dayString .= "<input type=\"text\" name=" . $lunchLabel . " value=\"$labelValue2\" class=\"recipeInput\" maxlength=\"50\" />";
+	$dayString .= "<div "."id=".$lunchDiv." ></div>";
 
+
+	//Dinner
 	$dayString .= "<label for=" . $dinnerLabel . ">Dinner</label>";
 	$labelValue3 = checkisset($dinnerLabel);
-	$dayString .= "<input type=\"text\" name=" . $dinnerLabel . " value=\"$labelValue3\" class=\"recipeInput\" maxlength=\"50\">";
+	$dayString .= "<input type=\"text\" name=" . $dinnerLabel . " value=\"$labelValue3\" class=\"recipeInput\" maxlength=\"50\" />";
+	$dayString .= "<div "."id=".$dinnerDiv." ></div>";
 
 	$dayString .= "</fieldset>";
 	$dayString .= "</div>";
@@ -325,6 +335,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 				//Create a function that inputs the serving value of the recipe, subtracts the selected servings, and outputs the new number to a div next to the textbox
 				var leftoverServings = servingMath(people, $servingValue);
 				console.log(leftoverServings);
+				$(this).append("<p>" + leftoverServings + "</p>");
 			}
 		});
 
