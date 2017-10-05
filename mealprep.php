@@ -5,8 +5,6 @@ if(!isset($_SESSION)){
 	session_start();
 }
 
-echo "<div value=\"5\"></div>";
-
 //Initialize the $searchResults variable
 $searchResults = "";
 //initialize the $calanderString Variable
@@ -180,16 +178,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 			if($type != 'tag') {
 				$sql = "SELECT DISTINCT recipe_info.recipe_name, recipe.servings FROM recipe, recipe_info WHERE (recipe.recipe_name = recipe_info.recipe_name) AND (recipe_info.$type = '$search')";
 				$result = $db->query($sql);
-				$returnString .= "<ul>";
+				$returnString .= "<dl>";
 				while($rows = $result->fetch_row()){
-					$returnString .= "<div class="."draggable"." class="."ui-widget-content"." class="."recipeDiv"." >";
-						$returnString .= "<li>";
+					/*$returnString .= "<div class="."draggable"." class="."ui-widget-content"." class="."recipeDiv"." >";*/
+						$returnString .= "<dt class="."draggable"." class="."ui-widget-content"." value=".$rows[1].">";
 							$returnString .= "$rows[0]";
-						$returnString .= "</li>";
-					$returnString .= "</div>";
+
+						$returnString .= "</dt>";
+						$returnString .= "<dd>".$rows[1]."</dd>";
+					/*$returnString .= "</div>";*/
 					//Set serving value
 				}
-				$returnString .= "</ul>";
+				$returnString .= "</dl>";
 			}
 			return $returnString;
 		}
