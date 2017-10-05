@@ -4,11 +4,18 @@ Stuff to do
 
 2 - Search function
     -remove the default search when the page first loads
-    -for now, remove the catagory requirment for the search. Just use search type and the search box.
+    -for now, remove the catagory requirment for the search. Just use search type and the search box. Remove text for it too.
     -Make the search work with the enter key by splitting the app into 2 forms.
+    -wtf is up with the size of the results? "chili" must be a block element. make the results work better
 
 3 - Calander
     -Make the number of servings sticky in the select box.
     -Later... find a way to handle the user changing the calander information when portions are already filled out.
     -Create the servings-leftovers functionality
-    -Why doesn't drag and drop work?
+    X Why doesn't drag and drop work?
+
+4 - Create a way to save the meal plan
+    - Must be alble to name the meal plan
+    - Database needs to be able to handle saved mealplans
+
+5 - 
