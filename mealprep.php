@@ -277,8 +277,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 					<option value="ingredient_name">Ingredient</option>
 					<option value="tag">Tag</option>
 				</select>
-				<label for="catagorySelect">Select Meal Type: </label>
-				<!--<select name="catagorySelect">
+				<!--<label for="catagorySelect">Select Meal Type: </label>
+					<select name="catagorySelect">
 					<option value=""></option>
 					<option value="breakfast">Breakfast</option>
 					<option value="lunch">Lunch</option>
@@ -308,8 +308,20 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	//Make the text boxes in the form droppable
 	$(".recipeInput").addClass("droppable");
 
+	//get the number of people
+	var people = $("#servingSelect").val();
+
+	//Function to calculate servings
+	function servingMath(people, recipeServings) {
+		var people = people;
+		var recipeServings = recipeServings;
+		var leftover = recipeServings - people;
+		return leftover;
+	}
 
 	$( function() {
+
+		//DRAGGABLE ----------
 		$( ".draggable" ).draggable({
 			cursor : 'pointer',
 			revert : true,
@@ -317,35 +329,37 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 			start: function( event, ui ) {
 				//Select the recipe name
 				$dropText = $(this).text();
+				//Select the serving value
 				$servingValue = $(this).context.attributes[1].value;
-				console.log($dropText);
-				console.log($servingValue);
+				//console.log($(this));
 			}
 		});
 
-		//get the number of people
-		var people = $("#servingSelect").val();
-		console.log(people);
+
+		//DROPPABLE ---------
 		$(".droppable").droppable({
 			activeClass : 'highlight',
 			tolerance : 'pointer',
 			drop : function(event, ui, droptext) {
+				//Makes the text appear in the textbox
 				$(this).val($dropText);
-				console.log($dropText);
-				//Create a function that inputs the serving value of the recipe, subtracts the selected servings, and outputs the new number to a div next to the textbox
+				// calculate the number of servings left over
 				var leftoverServings = servingMath(people, $servingValue);
-				console.log(leftoverServings);
-				$(this).append("<p>" + leftoverServings + "</p>");
+
+				//log (this) as an object
+				//console.log($(this));
+
+				//Select the name of the text box
+				var dayLabel = $(this).context.name;
+
+				var leftoverDiv = "#" + dayLabel + "Div";
+				console.log(leftoverDiv);
+				var theDiv = $(leftoverDiv);
+				console.log(theDiv);
+				theDiv.text(leftoverServings);
+				//$(this).append("<p>" + leftoverServings + "</p>");
 			}
 		});
-
-		//Function to calculate servings
-		function servingMath(people, recipeServings) {
-			var people = people;
-			var recipeServings = recipeServings;
-			var leftover = recipeServings - people;
-			return leftover;
-		}
 	} );
 </script>
 </body>
